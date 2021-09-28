@@ -76,10 +76,10 @@ public class ZpedBuilderIT {
         draftService.checkAsync(draftId).join().getOrThrow();
 
         draftDocument = draftService.lookupDocumentAsync(draftId, draftDocument.getId()).join().getOrThrow();
-        UUID dataToSignContentId = draftDocument.getDataToSignContentId();
+        UUID contentId = draftDocument.getContents().iterator().next().getContentId();
         ContentService contentService = engine.getContentService();
 
-        byte[] dataToSign = contentService.getContent(dataToSignContentId).join();
+        byte[] dataToSign = contentService.getContent(contentId).join();
         Assertions.assertNotNull(dataToSign);
         Assertions.assertTrue(dataToSign.length > 0);
     }
